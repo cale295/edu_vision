@@ -10,7 +10,6 @@ import EmptyState from '@/components/EmptyState';
 import { AnalysisResult, AnalysisResponse } from '@/types/analysis';
 
 export default function Home() {
-  const [mounted, setMounted] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -18,9 +17,8 @@ export default function Home() {
   const [isMocked, setIsMocked] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Avoid hydration mismatch by waiting until mounted
+  // Sync theme state on mount
   useEffect(() => {
-    setMounted(true);
     const theme = localStorage.getItem('theme');
     if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       setDarkMode(true);
@@ -116,8 +114,6 @@ export default function Home() {
     }
   };
 
-  if (!mounted) return null;
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 relative overflow-hidden font-sans pb-20">
       
@@ -130,7 +126,7 @@ export default function Home() {
       <header className="sticky top-0 z-40 w-full bg-white/70 dark:bg-slate-950/70 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-900/50 transition-colors">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-gradient-to-tr from-indigo-600 to-violet-550 text-white rounded-xl shadow-md shadow-indigo-650/15">
+            <div className="p-2 bg-gradient-to-tr from-indigo-600 to-violet-600 text-white rounded-xl shadow-md shadow-indigo-600/15">
               <GraduationCap className="w-5 h-5" />
             </div>
             <span className="text-lg font-black tracking-tight bg-gradient-to-r from-slate-900 to-indigo-900 dark:from-white dark:to-indigo-200 bg-clip-text text-transparent">
@@ -177,7 +173,7 @@ export default function Home() {
                 <div>
                   <button
                     onClick={handleClear}
-                    className="flex items-center gap-2 text-xs font-bold text-slate-450 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors uppercase tracking-wider mb-2"
+                    className="flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors uppercase tracking-wider mb-2"
                   >
                     <ArrowLeft className="w-3.5 h-3.5" />
                     <span>Kembali ke Beranda</span>
@@ -209,7 +205,7 @@ export default function Home() {
                   
                   <button
                     onClick={handleClear}
-                    className="w-full px-5 py-3 text-sm font-bold text-slate-750 dark:text-slate-300 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-850 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all duration-200 shadow-sm"
+                    className="w-full px-5 py-3 text-sm font-bold text-slate-700 dark:text-slate-300 bg-white hover:bg-slate-50 dark:bg-slate-900 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-2xl transition-all duration-200 shadow-sm"
                   >
                     Analisis Gambar Baru
                   </button>
@@ -232,14 +228,14 @@ export default function Home() {
             >
               {/* Hero Banner Intro */}
               <div className="text-center max-w-3xl mx-auto animate-fade-in">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-400 text-xs font-semibold mb-5 border border-indigo-100 dark:border-indigo-900/40">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-xs font-semibold mb-5 border border-indigo-100 dark:border-indigo-900/40">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Teknologi Edukasi Cerdas</span>
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-850 dark:text-white tracking-tight leading-none mb-4">
+                <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-slate-800 dark:text-white tracking-tight leading-none mb-4">
                   Visualisasikan Diagram,
-                  <span className="block text-indigo-600 dark:text-indigo-400 mt-2 bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-650 bg-clip-text text-transparent">
+                  <span className="block text-indigo-600 dark:text-indigo-400 mt-2 bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-600 bg-clip-text text-transparent">
                     Akselerasi Pembelajaran.
                   </span>
                 </h1>
@@ -275,7 +271,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto mt-8 p-4.5 text-sm rounded-3xl text-rose-800 dark:text-rose-400 bg-rose-50 dark:bg-rose-955/20 border border-rose-100 dark:border-rose-900/30 flex items-start gap-3.5 shadow-sm"
+            className="max-w-2xl mx-auto mt-8 p-4.5 text-sm rounded-3xl text-rose-800 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 flex items-start gap-3.5 shadow-sm"
           >
             <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-500 shrink-0 mt-0.5" />
             <div className="text-left">

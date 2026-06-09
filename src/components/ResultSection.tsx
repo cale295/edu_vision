@@ -100,7 +100,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
           bgColor="bg-blue-50 dark:bg-blue-950/40"
           borderColor="from-blue-500 to-indigo-500"
         >
-          <div className="text-lg font-black text-slate-805 dark:text-white">
+          <div className="text-lg font-black text-slate-800 dark:text-white">
             {result.diagramType}
           </div>
         </AnalysisCard>
@@ -173,7 +173,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
               ))}
             </ul>
           ) : (
-            <p className="text-slate-450 dark:text-slate-500 italic text-sm">
+            <p className="text-slate-400 dark:text-slate-500 italic text-sm">
               Tidak ada saran perbaikan yang diidentifikasi. Struktur diagram terlihat sudah optimal.
             </p>
           )}
@@ -212,7 +212,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
               className="flex items-center gap-4.5 bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 px-5 py-3.5 rounded-2xl shadow-sm"
             >
               <div>
-                <span className="text-[10px] text-slate-450 dark:text-slate-500 block uppercase tracking-wider font-bold">Skor Anda</span>
+                <span className="text-[10px] text-slate-400 dark:text-slate-500 block uppercase tracking-wider font-bold">Skor Anda</span>
                 <span className="text-2xl font-black text-indigo-650 dark:text-indigo-400">
                   {quizScore} <span className="text-slate-400 text-xs font-normal">/ {result.questions.length}</span>
                 </span>
@@ -237,7 +237,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
             return (
               <div
                 key={qIdx}
-                className="p-5 md:p-6 bg-slate-50 dark:bg-slate-950/30 border border-slate-200/50 dark:border-slate-850 rounded-2xl space-y-4"
+                className="p-5 md:p-6 bg-slate-50 dark:bg-slate-950/30 border border-slate-200/50 dark:border-slate-800 rounded-2xl space-y-4"
               >
                 <h4 className="text-sm md:text-base font-bold text-slate-800 dark:text-white flex gap-2.5 leading-snug">
                   <span className="text-indigo-500 dark:text-indigo-400 font-mono">Soal {qIdx + 1}.</span>
@@ -250,7 +250,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
                     const isSelected = selectedOpt === option;
                     const isCorrect = option === q.answer;
                     
-                    let optStyle = 'border-slate-200 dark:border-slate-800 hover:border-slate-350 dark:hover:border-slate-700 bg-white dark:bg-slate-900';
+                    let optStyle = 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-white dark:bg-slate-900';
                     
                     if (isSelected) {
                       optStyle = 'border-indigo-500 ring-2 ring-indigo-500/20 bg-indigo-50/10 dark:bg-indigo-950/20';
@@ -260,7 +260,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
                       if (isCorrect) {
                         optStyle = 'border-emerald-500 bg-emerald-50/20 dark:bg-emerald-950/20 text-emerald-800 dark:text-emerald-400 ring-2 ring-emerald-500/20';
                       } else if (isSelected) {
-                        optStyle = 'border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 text-rose-800 dark:text-rose-455 ring-2 ring-rose-500/20';
+                        optStyle = 'border-rose-500 bg-rose-50/20 dark:bg-rose-950/20 text-rose-800 dark:text-rose-400 ring-2 ring-rose-500/20';
                       } else {
                         optStyle = 'border-slate-200 dark:border-slate-800 opacity-50 bg-white dark:bg-slate-900';
                       }
@@ -302,17 +302,17 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
                     >
                       <div className="flex items-center gap-1.5 font-bold">
                         {selectedOpt === q.answer ? (
-                          <span className="text-emerald-600 dark:text-emerald-450 flex items-center gap-1">
+                          <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                             <Check className="w-4 h-4" /> Jawaban Benar
                           </span>
                         ) : (
-                          <span className="text-rose-600 dark:text-rose-455 flex items-center gap-1">
+                          <span className="text-rose-600 dark:text-rose-400 flex items-center gap-1">
                             <X className="w-4 h-4" /> Jawaban Salah
                           </span>
                         )}
                         <span className="text-slate-400 dark:text-slate-500 font-normal">| Kunci: {q.answer.substring(0, 1)}</span>
                       </div>
-                      <p className="text-slate-550 dark:text-slate-400 leading-relaxed font-medium">
+                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
                         {q.explanation}
                       </p>
                     </motion.div>
@@ -325,12 +325,12 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
 
         {/* Bottom repeat trigger */}
         {quizScore !== null && (
-          <div className="flex justify-center mt-8 pt-6 border-t border-slate-105 dark:border-slate-800">
+          <div className="flex justify-center mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={resetQuiz}
-              className="flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-650 hover:bg-indigo-600 rounded-2xl shadow-md shadow-indigo-650/15 hover:shadow-indigo-600/30 transition-all duration-200"
+              className="flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-2xl shadow-md shadow-indigo-600/15 hover:shadow-indigo-600/30 transition-all duration-200"
             >
               <RefreshCw className="w-4 h-4" />
               <span>Ulangi Seluruh Kuis</span>

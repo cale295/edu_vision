@@ -73,14 +73,14 @@ export default function LoadingState() {
         </p>
 
         {/* Progress Bar Container */}
-        <div className="w-full bg-slate-200 dark:bg-slate-850 h-2.5 rounded-full overflow-hidden mb-1 border border-slate-250/20 dark:border-slate-800">
+        <div className="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden mb-1 border border-slate-200/20 dark:border-slate-800">
           <motion.div
             className="h-full bg-gradient-to-r from-indigo-500 via-indigo-600 to-violet-650 rounded-full"
             style={{ width: `${progress}%` }}
             transition={{ ease: 'easeOut' }}
           ></motion.div>
         </div>
-        <span className="text-xs font-bold text-slate-400 dark:text-slate-550">
+        <span className="text-xs font-bold text-slate-400 dark:text-slate-500">
           {progress}% Selesai
         </span>
       </div>
@@ -95,9 +95,9 @@ export default function LoadingState() {
             <div className="h-4 w-1/3 bg-slate-200 dark:bg-slate-850 rounded animate-pulse"></div>
           </div>
           <div className="space-y-2 pt-2">
-            <div className="h-3.5 w-full bg-slate-150 dark:bg-slate-800 rounded animate-pulse"></div>
-            <div className="h-3.5 w-5/6 bg-slate-150 dark:bg-slate-800 rounded animate-pulse"></div>
-            <div className="h-3.5 w-2/3 bg-slate-150 dark:bg-slate-800 rounded animate-pulse"></div>
+            <div className="h-3.5 w-full bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+            <div className="h-3.5 w-5/6 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+            <div className="h-3.5 w-2/3 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
           </div>
         </div>
 
@@ -108,8 +108,8 @@ export default function LoadingState() {
             <div className="h-4 w-1/2 bg-slate-200 dark:bg-slate-850 rounded animate-pulse"></div>
           </div>
           <div className="space-y-2 pt-2">
-            <div className="h-3 w-full bg-slate-150 dark:bg-slate-800 rounded animate-pulse"></div>
-            <div className="h-3 w-4/5 bg-slate-150 dark:bg-slate-800 rounded animate-pulse"></div>
+            <div className="h-3 w-full bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
+            <div className="h-3 w-4/5 bg-slate-100 dark:bg-slate-800 rounded animate-pulse"></div>
           </div>
         </div>
 

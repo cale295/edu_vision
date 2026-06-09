@@ -50,7 +50,7 @@ export default function EmptyState({ onTriggerUpload }: EmptyStateProps) {
         >
           {/* Flowchart Mock Shape */}
           <div className="w-full space-y-2">
-            <div className="h-3 w-1/2 bg-blue-150 dark:bg-blue-950 rounded"></div>
+            <div className="h-3 w-1/2 bg-blue-100 dark:bg-blue-950 rounded"></div>
             <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded"></div>
             <div className="h-2 w-3/4 bg-slate-100 dark:bg-slate-800 rounded"></div>
           </div>
@@ -65,7 +65,7 @@ export default function EmptyState({ onTriggerUpload }: EmptyStateProps) {
           <div className="w-full flex gap-3 items-center">
             <div className="w-10 h-10 rounded-full border-4 border-indigo-500 border-t-transparent animate-spin-slow"></div>
             <div className="flex-1 space-y-2">
-              <div className="h-3 w-3/4 bg-indigo-150 dark:bg-indigo-950 rounded"></div>
+              <div className="h-3 w-3/4 bg-indigo-100 dark:bg-indigo-950 rounded"></div>
               <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded"></div>
             </div>
           </div>
@@ -92,7 +92,7 @@ export default function EmptyState({ onTriggerUpload }: EmptyStateProps) {
         </motion.div>
       </div>
 
-      <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-850 dark:text-white mb-3 leading-tight">
+      <h2 className="text-2xl md:text-3xl font-black tracking-tight text-slate-800 dark:text-white mb-3 leading-tight">
         Bagaimana Cara Kerja Aplikasi?
       </h2>
       
@@ -133,7 +133,7 @@ export default function EmptyState({ onTriggerUpload }: EmptyStateProps) {
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         onClick={onTriggerUpload}
-        className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-650 hover:bg-indigo-600 rounded-2xl transition-all duration-200 shadow-lg shadow-indigo-650/15 hover:shadow-indigo-600/30"
+        className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-2xl shadow-lg shadow-indigo-600/15 hover:shadow-indigo-600/30"
       >
         <span>Unggah Diagram Sekarang</span>
         <ArrowRight className="w-4 h-4" />

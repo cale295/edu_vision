@@ -155,7 +155,7 @@ export default function UploadArea({
             <div className="relative z-10 flex flex-col items-center text-center">
               <motion.div
                 whileHover={{ scale: 1.1, rotate: 5 }}
-                className="p-4 mb-5 rounded-2xl bg-slate-100 dark:bg-slate-850 text-slate-500 dark:text-slate-400 transition-colors duration-300 group-hover:bg-indigo-50 group-hover:text-indigo-600 dark:group-hover:bg-indigo-950/40 dark:group-hover:text-indigo-400 shadow-sm"
+                className="p-4 mb-5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors duration-300 group-hover:bg-indigo-50 group-hover:text-indigo-600 dark:group-hover:bg-indigo-950/40 dark:group-hover:text-indigo-400 shadow-sm"
               >
                 <Upload className="w-8 h-8" />
               </motion.div>
@@ -172,7 +172,7 @@ export default function UploadArea({
                 {['Flowchart', 'UML Class', 'ERD Schema', 'Network Topology', 'Process Map', 'Chart/Graph'].map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 text-xs font-semibold rounded-xl bg-slate-100/80 dark:bg-slate-850 text-slate-800 dark:text-slate-800 border border-slate-200/50 dark:border-slate-800"
+                    className="px-2.5 py-1 text-xs font-semibold rounded-xl bg-slate-100/80 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-200/50 dark:border-slate-700"
                   >
                     {tag}
                   </span>
@@ -212,7 +212,7 @@ export default function UploadArea({
                 <button
                   onClick={onClear}
                   disabled={isAnalyzing}
-                  className="p-1.5 text-slate-450 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-850 transition-colors disabled:opacity-50"
+                  className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50"
                   aria-label="Remove image"
                 >
                   <X className="w-4 h-4" />
@@ -233,7 +233,7 @@ export default function UploadArea({
                 <button
                   onClick={onClear}
                   disabled={isAnalyzing}
-                  className="w-full sm:w-auto px-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-350 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-800 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-850 transition-all duration-200 disabled:opacity-50"
+                  className="w-full sm:w-auto px-5 py-3 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-200 disabled:opacity-50"
                 >
                   Ganti Gambar
                 </button>
@@ -242,7 +242,7 @@ export default function UploadArea({
                   whileTap={{ scale: 0.99 }}
                   onClick={onAnalyze}
                   disabled={isAnalyzing}
-                  className="w-full sm:w-auto px-6 py-3 text-sm font-bold text-white bg-indigo-650 hover:bg-indigo-600 rounded-xl transition-all duration-200 shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                  className="w-full sm:w-auto px-6 py-3 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl transition-all duration-200 shadow-md shadow-indigo-600/10 hover:shadow-indigo-600/20 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Analisis Gambar</span>
@@ -257,7 +257,7 @@ export default function UploadArea({
         <motion.div
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-2.5 mt-4 p-4 text-sm rounded-2xl text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-955/20 border border-rose-100 dark:border-rose-900/30 shadow-sm"
+          className="flex items-center gap-2.5 mt-4 p-4 text-sm rounded-2xl text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 shadow-sm"
         >
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{error}</span>

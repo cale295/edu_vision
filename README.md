@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EduVision AI 🎓
 
-## Getting Started
+EduVision AI adalah aplikasi web cerdas bertenaga AI untuk menganalisis diagram pendidikan (seperti diagram database ERD, diagram kelas UML, diagram arsitektur, dll.) secara instan dan menghasilkan kuis evaluasi pemahaman otomatis menggunakan **Gemini 2.5 Flash**.
 
-First, run the development server:
+Aplikasi ini dibangun menggunakan **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, dan **Framer Motion**.
 
+---
+
+## ✨ Fitur Utama
+
+- 🔍 **Analisis Visual Diagram**: Menggunakan model visi canggih dari Gemini untuk mendeteksi tipe diagram, mendeskripsikan alur, mengidentifikasi komponen kunci, dan memberikan penjelasan komprehensif.
+- 📝 **Kuis Latihan Pemahaman**: Secara dinamis menghasilkan 5 pertanyaan pilihan ganda yang relevan dengan diagram yang diunggah untuk menguji pemahaman pengguna.
+- 🌓 **Tema Gelap & Terang Premium**: Perpindahan tema yang mulus dengan transisi warna yang elegan dan performa tinggi (bebas dari *hydration flash*).
+- 📂 **Metode Unggah Fleksibel**:
+  - Drag and drop (tarik & lepas) file gambar.
+  - Eksplorasi file lokal.
+  - Tempel langsung dari clipboard (**Ctrl+V** atau **Cmd+V**).
+- 💫 **Desain Interaktif & Premium**: Antarmuka modern yang dinamis dengan efek *glassmorphism*, ornamen latar belakang bercahaya (*floating orbs*), dan mikro-animasi menggunakan Framer Motion.
+
+---
+
+## 🛠️ Teknologi yang Digunakan
+
+- **Frontend**: [Next.js 16](https://nextjs.org/) (App Router), React 19, TypeScript
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animasi**: [Framer Motion](https://www.framer.com/motion/)
+- **Ikon**: [Lucide React](https://lucide.dev/)
+- **AI Integration**: [Google Gemini SDK](https://ai.google.dev/)
+
+---
+
+## 🚀 Memulai Pengoperasian
+
+### 1. Prasyarat
+Pastikan Anda telah menginstal [Node.js](https://nodejs.org/) (versi 18 ke atas disarankan).
+
+### 2. Klon Repositori & Instal Dependensi
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Instal modul node
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. Konfigurasi Variabel Lingkungan (Environment Variables)
+Buat berkas `.env.local` di root direktori proyek Anda dan tambahkan kunci API Gemini Anda:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Menjalankan Server Pengembangan
+Jalankan dev server dengan perintah berikut:
+```bash
+npm run dev
+```
+Buka [http://localhost:3000](http://localhost:3000) pada browser Anda untuk melihat aplikasi berjalan.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 5. Membangun Proyek untuk Produksi
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 💡 Mengatasi Masalah Tema (Troubleshooting Theme Mode)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Proyek ini menggunakan **Tailwind CSS v4** dengan pendekatan konfigurasi berbasis CSS. Jika Anda melihat perubahan tema hanya memengaruhi beberapa bagian (seperti scrollbar) sementara warna latar belakang utama halaman tetap gelap (saat mode terang diaktifkan), hal ini biasanya terjadi karena **Next.js Turbopack dev server melakukan caching pada styles**.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Solusi:**
+Hentikan server pengembangan Anda di terminal (`Ctrl + C`) lalu jalankan kembali:
+```bash
+npm run dev
+```
+Menyalakan ulang dev server akan memaksa Tailwind CSS v4 memuat ulang konfigurasi `@custom-variant` di `globals.css` sehingga mode terang dan gelap dapat berfungsi penuh dan responsif terhadap tombol toggle.
