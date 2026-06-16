@@ -213,7 +213,7 @@ export default function Home() {
 
                 {/* Right analysis cards column */}
                 <div className="lg:col-span-2">
-                  <ResultSection result={result} isMocked={isMocked} />
+                  <ResultSection result={result} isMocked={isMocked} onNewQuiz={handleClear} />
                 </div>
               </div>
             </motion.div>

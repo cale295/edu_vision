@@ -20,39 +20,42 @@ import AnalysisCard from './AnalysisCard';
 interface ResultSectionProps {
   result: AnalysisResult;
   isMocked?: boolean;
+  onNewQuiz?: () => void;
 }
 
-export default function ResultSection({ result, isMocked }: ResultSectionProps) {
+export default function ResultSection({ result, isMocked, onNewQuiz }: ResultSectionProps) {
   // Quiz State
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: string }>({});
-  const [showResults, setShowResults] = useState<{ [key: number]: boolean }>({});
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [quizScore, setQuizScore] = useState<number | null>(null);
 
   const handleSelectOption = (qIndex: number, option: string) => {
-    if (showResults[qIndex]) return;
+    if (isSubmitted) return;
     setSelectedAnswers((prev) => ({ ...prev, [qIndex]: option }));
   };
 
-  const handleCheckAnswer = (qIndex: number) => {
-    if (!selectedAnswers[qIndex]) return;
-    setShowResults((prev) => ({ ...prev, [qIndex]: true }));
-
-    const nextShowResults = { ...showResults, [qIndex]: true };
-    if (Object.keys(nextShowResults).length === result.questions.length) {
-      let score = 0;
-      result.questions.forEach((q, idx) => {
-        const userAnswer = selectedAnswers[idx];
-        if (userAnswer === q.answer) {
-          score += 1;
-        }
-      });
-      setQuizScore(score);
+  const handleSubmitQuiz = () => {
+    // Check if all questions are answered
+    const allAnswered = result.questions.every((_, idx) => selectedAnswers[idx] !== undefined);
+    if (!allAnswered) {
+      alert("Harap jawab semua soal sebelum men-submit kuis!");
+      return;
     }
+
+    let score = 0;
+    result.questions.forEach((q, idx) => {
+      const userAnswer = selectedAnswers[idx];
+      if (userAnswer === q.answer) {
+        score += 1;
+      }
+    });
+    setQuizScore(score);
+    setIsSubmitted(true);
   };
 
   const resetQuiz = () => {
     setSelectedAnswers({});
-    setShowResults({});
+    setIsSubmitted(false);
     setQuizScore(null);
   };
 
@@ -204,8 +207,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
               Uji tingkat kognisi Anda dengan menjawab 5 soal pilihan ganda berikut.
             </p>
           </div>
-
-          {quizScore !== null && (
+          {isSubmitted && quizScore !== null && (
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -217,13 +219,24 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
                   {quizScore} <span className="text-slate-400 text-xs font-normal">/ {result.questions.length}</span>
                 </span>
               </div>
-              <button
-                onClick={resetQuiz}
-                className="p-2.5 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100/50 dark:hover:bg-indigo-950/50 rounded-xl transition-all duration-200"
-                title="Ulangi Kuis"
-              >
-                <RefreshCw className="w-5 h-5" />
-              </button>
+              <div className="flex gap-1.5">
+                <button
+                  onClick={resetQuiz}
+                  className="p-2.5 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100/50 dark:hover:bg-indigo-950/50 rounded-xl transition-all duration-200"
+                  title="Ulangi Kuis"
+                >
+                  <RefreshCw className="w-5 h-5" />
+                </button>
+                {onNewQuiz && (
+                  <button
+                    onClick={onNewQuiz}
+                    className="p-2.5 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100/50 dark:hover:bg-indigo-950/50 rounded-xl transition-all duration-200"
+                    title="Buat Kuis Baru"
+                  >
+                    <BookOpen className="w-5 h-5" />
+                  </button>
+                )}
+              </div>
             </motion.div>
           )}
         </div>
@@ -231,7 +244,7 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
         {/* Questions Checklist */}
         <div className="space-y-8">
           {result.questions.map((q, qIdx) => {
-            const hasSubmitted = showResults[qIdx];
+            const hasSubmitted = isSubmitted;
             const selectedOpt = selectedAnswers[qIdx];
 
             return (
@@ -281,60 +294,68 @@ export default function ResultSection({ result, isMocked }: ResultSectionProps) 
                   })}
                 </div>
 
-                {/* Submit button and explanation */}
-                <div className="flex flex-col gap-3">
-                  {!hasSubmitted ? (
-                    <div className="flex justify-end">
-                      <motion.button
-                        whileTap={{ scale: 0.97 }}
-                        onClick={() => handleCheckAnswer(qIdx)}
-                        disabled={!selectedOpt}
-                        className="px-4.5 py-2.5 text-xs font-bold text-white bg-slate-800 hover:bg-slate-700 dark:bg-indigo-650 dark:hover:bg-indigo-600 rounded-xl transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed"
-                      >
-                        Periksa Jawaban
-                      </motion.button>
+                {/* Explanation */}
+                {hasSubmitted && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs md:text-sm shadow-sm space-y-1.5 text-left"
+                  >
+                    <div className="flex items-center gap-1.5 font-bold">
+                      {selectedOpt === q.answer ? (
+                        <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                          <Check className="w-4 h-4" /> Jawaban Benar
+                        </span>
+                      ) : (
+                        <span className="text-rose-600 dark:text-rose-400 flex items-center gap-1">
+                          <X className="w-4 h-4" /> Jawaban Salah
+                        </span>
+                      )}
+                      <span className="text-slate-400 dark:text-slate-500 font-normal">| Kunci: {q.answer}</span>
                     </div>
-                  ) : (
-                    <motion.div
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="p-4.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-xs md:text-sm shadow-sm space-y-1.5 text-left"
-                    >
-                      <div className="flex items-center gap-1.5 font-bold">
-                        {selectedOpt === q.answer ? (
-                          <span className="text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
-                            <Check className="w-4 h-4" /> Jawaban Benar
-                          </span>
-                        ) : (
-                          <span className="text-rose-600 dark:text-rose-400 flex items-center gap-1">
-                            <X className="w-4 h-4" /> Jawaban Salah
-                          </span>
-                        )}
-                        <span className="text-slate-400 dark:text-slate-500 font-normal">| Kunci: {q.answer.substring(0, 1)}</span>
-                      </div>
-                      <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                        {q.explanation}
-                      </p>
-                    </motion.div>
-                  )}
-                </div>
+                    <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                      {q.explanation}
+                    </p>
+                  </motion.div>
+                )}
               </div>
             );
           })}
         </div>
 
-        {/* Bottom repeat trigger */}
-        {quizScore !== null && (
+        {/* Bottom Actions */}
+        {!isSubmitted ? (
           <div className="flex justify-center mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              onClick={handleSubmitQuiz}
+              className="flex items-center gap-2 px-8 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-2xl shadow-md shadow-indigo-600/15 hover:shadow-indigo-600/30 transition-all duration-200"
+            >
+              <span>Submit Kuis</span>
+            </motion.button>
+          </div>
+        ) : (
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               onClick={resetQuiz}
-              className="flex items-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-2xl shadow-md shadow-indigo-600/15 hover:shadow-indigo-600/30 transition-all duration-200"
+              className="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold text-indigo-650 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-900/40 rounded-2xl transition-all duration-200"
             >
               <RefreshCw className="w-4 h-4" />
-              <span>Ulangi Seluruh Kuis</span>
+              <span>Ulangi Kuis</span>
             </motion.button>
+            {onNewQuiz && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={onNewQuiz}
+                className="flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 rounded-2xl shadow-md shadow-indigo-600/15 hover:shadow-indigo-600/30 transition-all duration-200"
+              >
+                <span>Buat Kuis Baru</span>
+              </motion.button>
+            )}
           </div>
         )}
       </motion.div>

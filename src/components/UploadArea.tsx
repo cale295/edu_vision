@@ -119,7 +119,7 @@ export default function UploadArea({
   return (
     <div className="w-full">
       <AnimatePresence mode="wait">
-        {!previewUrl ? (
+        {!previewUrl || !selectedFile ? (
           <motion.div
             key="dropzone"
             initial={{ opacity: 0, scale: 0.98 }}
@@ -207,7 +207,7 @@ export default function UploadArea({
                       {selectedFile?.name}
                     </span>
                     <span className="text-[10px] font-semibold text-slate-400 dark:text-slate-500">
-                      {(selectedFile!.size / (1024 * 1024)).toFixed(2)} MB
+                      {selectedFile ? (selectedFile.size / (1024 * 1024)).toFixed(2) : '0.00'} MB
                     </span>
                   </div>
                 </div>
