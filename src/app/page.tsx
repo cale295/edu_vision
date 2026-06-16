@@ -257,6 +257,7 @@ export default function Home() {
                   onClear={handleClear}
                   isAnalyzing={isAnalyzing}
                   onAnalyze={handleAnalyze}
+                  error={error}
                 />
               </div>
 
@@ -266,25 +267,7 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* Global Error Banner */}
-        {error && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto mt-8 p-4.5 text-sm rounded-3xl text-rose-800 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 flex items-start gap-3.5 shadow-sm"
-          >
-            <AlertCircle className="w-5 h-5 text-rose-600 dark:text-rose-500 shrink-0 mt-0.5" />
-            <div className="text-left">
-              <span className="font-bold">Analisis gagal dilakukan:</span> {error}
-              <button
-                onClick={handleAnalyze}
-                className="block mt-2 font-bold text-rose-700 hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300 underline"
-              >
-                Coba kirim ulang gambar
-              </button>
-            </div>
-          </motion.div>
-        )}
+
 
       </main>
     </div>

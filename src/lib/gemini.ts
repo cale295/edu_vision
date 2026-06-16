@@ -17,11 +17,32 @@ export async function analyzeDiagramWithGemini(
     : ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash'];
 
   const prompt = `Anda adalah EduVision AI, sistem edukasi ahli yang berspesialisasi dalam menjelaskan diagram akademis (flowchart, UML, ERD, topologi jaringan, peta proses, grafik).
-Analisis diagram yang diunggah bernama "${fileName}" dan keluarkan analisis terstruktur serta soal latihan.
+
+PENTING: Langkah pertama Anda adalah menganalisis apakah gambar yang diunggah benar-benar merupakan salah satu dari jenis diagram akademis/edukasi berikut:
+1. Flowchart
+2. UML Class (Diagram Kelas UML)
+3. ERD Schema (Skema Diagram Hubungan Entitas)
+4. Network Topology (Topologi Jaringan)
+5. Process Map (Peta Proses)
+6. Chart/Graph (Grafik atau Bagan)
+
+Jika gambar yang diunggah BUKAN merupakan salah satu dari jenis diagram di atas (misalnya berupa foto pemandangan, foto selfie, hewan, makanan, dokumen teks biasa, screenshot aplikasi biasa, atau objek non-diagram lainnya):
+- Set properti "isValidDiagram" menjadi false.
+- Set properti "invalidReason" dengan penjelasan bahasa Indonesia yang sopan mengapa gambar ditolak (misalnya: "Gambar yang diunggah tampaknya bukan merupakan jenis diagram yang didukung. Pastikan Anda mengunggah diagram seperti Flowchart, UML, ERD, Topologi Jaringan, Peta Proses, atau Grafik.").
+- Untuk properti lainnya ("diagramType", "explanation", "components", "summary", "improvements", "questions"), Anda dapat mengisi dengan nilai kosong atau array kosong sesuai tipe datanya (tidak perlu melakukan analisis).
+
+Jika gambar yang diunggah ADALAH salah satu dari jenis diagram di atas:
+- Set properti "isValidDiagram" menjadi true.
+- Set properti "invalidReason" menjadi "" (string kosong).
+- Lakukan analisis diagram secara detail dan isi seluruh properti lainnya sesuai skema.
+
+Analisis diagram yang diunggah bernama "${fileName}" dan keluarkan analisis terstruktur serta soal latihan jika valid.
 Seluruh isi analisis, penjelasan, nama komponen, saran perbaikan, pertanyaan kuis, pilihan ganda, dan pembahasan kuis HARUS menggunakan Bahasa Indonesia yang baik dan benar.
 
 JSON output yang dihasilkan harus mematuhi skema berikut:
 {
+  "isValidDiagram": boolean,
+  "invalidReason": "String pesan penolakan jika gambar bukan diagram yang didukung, atau kosong jika valid",
   "diagramType": "Jenis diagram (misalnya: Diagram Kelas UML, Database ERD, Flowchart Proses, dll.)",
   "explanation": "Penjelasan langkah demi langkah yang jelas tentang arti diagram dan tujuan utamanya.",
   "components": ["Komponen 1 dengan deskripsi detail", "Komponen 2 dengan deskripsi detail", "..."],
@@ -71,6 +92,8 @@ JSON output yang dihasilkan harus mematuhi skema berikut:
             responseSchema: {
               type: 'OBJECT',
               properties: {
+                isValidDiagram: { type: 'BOOLEAN' },
+                invalidReason: { type: 'STRING' },
                 diagramType: { type: 'STRING' },
                 explanation: { type: 'STRING' },
                 components: {
@@ -100,6 +123,8 @@ JSON output yang dihasilkan harus mematuhi skema berikut:
                 },
               },
               required: [
+                'isValidDiagram',
+                'invalidReason',
                 'diagramType',
                 'explanation',
                 'components',

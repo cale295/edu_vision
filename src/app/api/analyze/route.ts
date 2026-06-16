@@ -405,6 +405,25 @@ export async function POST(req: NextRequest) {
     }
 
     if (!hasGeminiKey) {
+      const isValidMockKeyword = [
+        'flowchart', 'flow', 'proses', 
+        'uml', 'class', 'kelas', 
+        'erd', 'database', 'entitas', 'relation', 'schema',
+        'network', 'jaringan', 'topology',
+        'map', 'peta',
+        'chart', 'graph', 'grafik', 'bagan'
+      ].some(keyword => cleanFileName.includes(keyword));
+
+      if (!isValidMockKeyword) {
+        return NextResponse.json<AnalysisResponse>(
+          { 
+            success: false, 
+            error: 'Gambar tidak dikenali sebagai jenis diagram yang didukung. Pastikan nama berkas mengandung kata kunci diagram (seperti "flowchart", "uml", "erd", "network", "map", atau "chart").' 
+          },
+          { status: 400 }
+        );
+      }
+
       // Simulate real network response latency (1.5s)
       await delay(1500);
       return NextResponse.json<AnalysisResponse>({
@@ -421,6 +440,16 @@ export async function POST(req: NextRequest) {
       
       const analysis = await analyzeDiagramWithGemini(base64Data, parsedMimeType, fileName || 'diagram.png');
       
+      if (analysis.isValidDiagram === false) {
+        return NextResponse.json<AnalysisResponse>(
+          { 
+            success: false, 
+            error: analysis.invalidReason || 'Gambar yang diunggah bukan merupakan diagram yang didukung.' 
+          },
+          { status: 400 }
+        );
+      }
+
       return NextResponse.json<AnalysisResponse>({
         success: true,
         data: analysis,
@@ -428,6 +457,26 @@ export async function POST(req: NextRequest) {
       });
     } catch (apiError: any) {
       console.warn('Gemini API inference failed, falling back to smart mock response.', apiError.message);
+      
+      const isValidMockKeyword = [
+        'flowchart', 'flow', 'proses', 
+        'uml', 'class', 'kelas', 
+        'erd', 'database', 'entitas', 'relation', 'schema',
+        'network', 'jaringan', 'topology',
+        'map', 'peta',
+        'chart', 'graph', 'grafik', 'bagan'
+      ].some(keyword => cleanFileName.includes(keyword));
+
+      if (!isValidMockKeyword) {
+        return NextResponse.json<AnalysisResponse>(
+          { 
+            success: false, 
+            error: `Gagal menganalisis gambar: Gambar tidak dikenali sebagai jenis diagram yang didukung.` 
+          },
+          { status: 400 }
+        );
+      }
+
       // Fallback to mock on Gemini error
       await delay(1200);
       return NextResponse.json<AnalysisResponse>({

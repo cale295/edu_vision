@@ -6,6 +6,8 @@ export interface QuizQuestion {
 }
 
 export interface AnalysisResult {
+  isValidDiagram?: boolean;
+  invalidReason?: string;
   diagramType: string;
   explanation: string;
   components: string[];

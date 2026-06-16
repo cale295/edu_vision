@@ -10,6 +10,7 @@ interface UploadAreaProps {
   onClear: () => void;
   isAnalyzing: boolean;
   onAnalyze: () => void;
+  error?: string | null;
 }
 
 export default function UploadArea({
@@ -18,6 +19,7 @@ export default function UploadArea({
   onClear,
   isAnalyzing,
   onAnalyze,
+  error: propError,
 }: UploadAreaProps) {
   const [dragActive, setDragActive] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -227,6 +229,16 @@ export default function UploadArea({
                   className="object-contain max-h-[360px] rounded-2xl shadow-sm border border-slate-200/50 dark:border-slate-800"
                 />
               </div>
+
+              {/* Error Alert inside Preview Card */}
+              {propError && (
+                <div className="mx-6 mb-4 p-4 text-sm rounded-2xl text-rose-700 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20 border border-rose-100 dark:border-rose-900/30 flex items-start gap-2.5 shadow-sm">
+                  <AlertCircle className="w-4.5 h-4.5 text-rose-600 dark:text-rose-500 shrink-0 mt-0.5" />
+                  <div className="text-left">
+                    <span className="font-bold">Analisis gagal:</span> {propError}
+                  </div>
+                </div>
+              )}
 
               {/* Actions Footer */}
               <div className="p-5 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row gap-3 justify-end items-center">
