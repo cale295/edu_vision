@@ -1,59 +1,82 @@
 # EduVision AI 🎓
 
-EduVision AI adalah aplikasi web cerdas bertenaga AI untuk menganalisis diagram pendidikan (seperti diagram database ERD, diagram kelas UML, diagram arsitektur, dll.) secara instan dan menghasilkan kuis evaluasi pemahaman otomatis menggunakan **Gemini 2.5 Flash**.
+EduVision AI adalah aplikasi web yang membantu menganalisis berbagai jenis diagram pendidikan, seperti ERD, UML Class Diagram, dan diagram arsitektur. Setelah diagram diunggah, aplikasi akan memberikan penjelasan mengenai isi diagram serta membuat kuis pilihan ganda secara otomatis menggunakan **Gemini 2.5 Flash**.
 
 Aplikasi ini dibangun menggunakan **Next.js 16 (App Router)**, **TypeScript**, **Tailwind CSS v4**, dan **Framer Motion**.
 
 ---
 
-## ✨ Fitur Utama
+## ✨ Fitur
 
-- 🔍 **Analisis Visual Diagram**: Menggunakan model visi canggih dari Gemini untuk mendeteksi tipe diagram, mendeskripsikan alur, mengidentifikasi komponen kunci, dan memberikan penjelasan komprehensif.
-- 📝 **Kuis Latihan Pemahaman**: Secara dinamis menghasilkan 5 pertanyaan pilihan ganda yang relevan dengan diagram yang diunggah untuk menguji pemahaman pengguna.
-- 🌓 **Tema Gelap & Terang Premium**: Perpindahan tema yang mulus dengan transisi warna yang elegan dan performa tinggi (bebas dari *hydration flash*).
-- 📂 **Metode Unggah Fleksibel**:
-  - Drag and drop (tarik & lepas) file gambar.
-  - Eksplorasi file lokal.
-  - Tempel langsung dari clipboard (**Ctrl+V** atau **Cmd+V**).
-- 💫 **Desain Interaktif & Premium**: Antarmuka modern yang dinamis dengan efek *glassmorphism*, ornamen latar belakang bercahaya (*floating orbs*), dan mikro-animasi menggunakan Framer Motion.
+* 🔍 **Analisis Diagram Otomatis**
+
+  * Mengidentifikasi jenis diagram yang diunggah.
+  * Menjelaskan komponen-komponen penting dalam diagram.
+  * Memberikan ringkasan dan penjelasan alur diagram.
+
+* 📝 **Pembuatan Kuis Otomatis**
+
+  * Menghasilkan 5 soal pilihan ganda berdasarkan diagram yang diunggah.
+  * Membantu pengguna mengukur pemahaman terhadap materi yang dianalisis.
+
+* 🌓 **Mode Terang dan Gelap**
+
+  * Mendukung pergantian tema terang dan gelap.
+  * Tampilan tema tersimpan dan diterapkan secara konsisten.
+
+* 📂 **Berbagai Metode Upload**
+
+  * Drag and drop gambar.
+  * Pilih file dari perangkat.
+  * Tempel gambar langsung dari clipboard menggunakan **Ctrl + V** atau **Cmd + V**.
+
+* 💫 **Antarmuka Interaktif**
+
+  * Dibuat dengan tampilan modern menggunakan Tailwind CSS.
+  * Menggunakan animasi ringan dari Framer Motion untuk meningkatkan pengalaman pengguna.
 
 ---
 
 ## 🛠️ Teknologi yang Digunakan
 
-- **Frontend**: [Next.js 16](https://nextjs.org/) (App Router), React 19, TypeScript
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Animasi**: [Framer Motion](https://www.framer.com/motion/)
-- **Ikon**: [Lucide React](https://lucide.dev/)
-- **AI Integration**: [Google Gemini SDK](https://ai.google.dev/)
+* **Frontend:** Next.js 16 (App Router), React 19, TypeScript
+* **Styling:** Tailwind CSS v4
+* **Animasi:** Framer Motion
+* **Ikon:** Lucide React
+* **AI:** Google Gemini SDK
 
 ---
 
-## 🚀 Memulai Pengoperasian
+## 🚀 Menjalankan Proyek
 
 ### 1. Prasyarat
-Pastikan Anda telah menginstal [Node.js](https://nodejs.org/) (versi 18 ke atas disarankan).
 
-### 2. Klon Repositori & Instal Dependensi
+Pastikan telah menginstal Node.js versi 18 atau lebih baru.
+
+### 2. Instal Dependensi
+
 ```bash
-# Instal modul node
 npm install
 ```
 
-### 3. Konfigurasi Variabel Lingkungan (Environment Variables)
-Buat berkas `.env.local` di root direktori proyek Anda dan tambahkan kunci API Gemini Anda:
+### 3. Konfigurasi Environment Variable
+
+Buat file `.env.local` pada root proyek dan tambahkan API key Gemini:
+
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-### 4. Menjalankan Server Pengembangan
-Jalankan dev server dengan perintah berikut:
+### 4. Menjalankan Development Server
+
 ```bash
 npm run dev
 ```
-Buka [http://localhost:3000](http://localhost:3000) pada browser Anda untuk melihat aplikasi berjalan.
 
-### 5. Membangun Proyek untuk Produksi
+Buka `http://localhost:3000` pada browser untuk melihat aplikasi berjalan.
+
+### 5. Build untuk Produksi
+
 ```bash
 npm run build
 npm start
@@ -61,13 +84,20 @@ npm start
 
 ---
 
-## 💡 Mengatasi Masalah Tema (Troubleshooting Theme Mode)
+## 🔧 Troubleshooting Tema
 
-Proyek ini menggunakan **Tailwind CSS v4** dengan pendekatan konfigurasi berbasis CSS. Jika Anda melihat perubahan tema hanya memengaruhi beberapa bagian (seperti scrollbar) sementara warna latar belakang utama halaman tetap gelap (saat mode terang diaktifkan), hal ini biasanya terjadi karena **Next.js Turbopack dev server melakukan caching pada styles**.
+Jika perubahan tema hanya memengaruhi sebagian elemen (misalnya scrollbar) sementara warna halaman tidak berubah, kemungkinan penyebabnya adalah cache dari Turbopack saat proses development.
 
-**Solusi:**
-Hentikan server pengembangan Anda di terminal (`Ctrl + C`) lalu jalankan kembali:
+Hentikan server yang sedang berjalan:
+
+```bash
+Ctrl + C
+```
+
+Kemudian jalankan kembali:
+
 ```bash
 npm run dev
 ```
-Menyalakan ulang dev server akan memaksa Tailwind CSS v4 memuat ulang konfigurasi `@custom-variant` di `globals.css` sehingga mode terang dan gelap dapat berfungsi penuh dan responsif terhadap tombol toggle.
+
+Setelah server dijalankan ulang, konfigurasi tema pada Tailwind CSS akan dimuat kembali dan perubahan mode terang/gelap akan diterapkan dengan benar.
